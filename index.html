@@ -14589,6 +14589,7 @@ async function applyAttendance(worker, overwriteExit){
   rec.workedMinutes = worked;
   rec.status = worked >= settings.fullDayMinutes ? 'Full Day' : 'Half Day';
   rec.synced = false;
+  rec.ownSynced = false;   // exit is a fresh change too — must re-reach the own-linked Sheet, not just admin
   await idbPut('attendance', rec);
   triggerSync(false); updateGlobalStatus();
   return { kind: 'ok', changed: true, title: 'EXIT ✓ ' + rec.status, message: 'Marked OUT at ' + rec.exitTime + ' · worked ' + fmtMinutes(worked) };
